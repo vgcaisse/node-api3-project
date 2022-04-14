@@ -16,6 +16,7 @@ router.get('/', (req, res) => {
 router.get('/:id', validateUserId, (req, res) => {
   // RETURN THE USER OBJECT
   // this needs a middleware to verify user id
+  console.log(req.user)
 });
 
 router.post('/', validateUserId, (req, res) => {
@@ -43,6 +44,8 @@ router.post('/:id/posts', validateUserId, (req, res) => {
   // RETURN THE NEWLY CREATED USER POST
   // this needs a middleware to verify user id
   // and another middleware to check that the request body is valid
+  console.log(req.user)
 });
 
 // do not forget to export the router
+module.exports = router
