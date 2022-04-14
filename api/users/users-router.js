@@ -53,5 +53,13 @@ router.post('/:id/posts', validateUserId, validatePost, (req, res) => {
   console.log(req.text)
 });
 
+router.use((err, req, res, next) => { // eslint-disable-line
+  res.status(err.status || 500).json({
+    message: err.message,
+    CustomMessage: `le monkes are on it!!`,         // epicn gaben helpin outin
+    stack: err.stack
+  })
+})                                                                  
+
 // do not forget to export the router
 module.exports = router
