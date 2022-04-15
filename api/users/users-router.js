@@ -25,13 +25,17 @@ router.get('/', (req, res, next) => {
 router.get('/:id', validateUserId, (req, res) => {
   // RETURN THE USER OBJECT
   // this needs a middleware to verify user id
-  console.log(req.user)
+  res.json(req.user)
 });
 
-router.post('/', validateUser, (req, res) => {
+router.post('/', validateUser, (req, res, next) => {
   // RETURN THE NEWLY CREATED USER OBJECT
   // this needs a middleware to check that the request body is valid
-  console.log(req.name)
+  User.insert({ name: req.name }) 
+    .then(newUser => {
+      res.status(201).json(newUser)
+    })
+    .catch(next)
 });
 
 router.put('/:id', validateUserId, validateUser, (req, res) => {
@@ -66,7 +70,7 @@ router.use((err, req, res, next) => { // eslint-disable-line
     CustomMessage: `le monkes are on it!!`,         // epicn gaben helpin outin
     stack: err.stack
   })
-})                                                                  
+})
 
 // do not forget to export the router
 module.exports = router
